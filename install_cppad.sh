@@ -18,8 +18,7 @@ install_cppad()
     CppAD="cppad"
     VERSION="20180000.0"
     CppAD_URL="http://www.coin-or.org/download/source/CppAD/$CppAD-$VERSION.gpl.tgz"
-    TEMP_DIR=$(mktemp -d)
-    CPPADDIR="$TEMP_DIR/$CppAD-$VERSION"
+    TEMP_DIR=/tmp
     #sudo apt-get -qq install cmake
     if ( ls /usr/include | grep cppad );then
         echo "cppad is already installed......"
@@ -36,8 +35,9 @@ install_cppad()
         sudo make install
         echo "CppAD installed successfully"
         cd $TEMP_DIR
-        rm -rf $CppAD-$VERSION
+        rm -rf *
     fi
+    echo "cppad has been installed successfully and there's no error!!!"
 }
 
 main

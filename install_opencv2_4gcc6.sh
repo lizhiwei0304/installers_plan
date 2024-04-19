@@ -1,13 +1,10 @@
 #!/bin/bash
 set -e  # exit on first error
-UBUNTU_VERSION=`lsb_release --release | cut -f2`
 SRC_PATH="/tmp"
 OPENCV_BENCHMARK_VERSION=v2.4.13
 
 main(){
-    if [ $UBUNTU_VERSION == "16.04" ]; then
-        install_opencv_2_4
-    fi
+    install_opencv_2_4
 }
 
 install_opencv_2_4() {

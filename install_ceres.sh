@@ -5,15 +5,13 @@ SRC_PATH="/tmp"
 CERES_VERSION=1.12.0
 
 main(){
-    if [ $UBUNTU_VERSION == "16.04" ]; then
-        install_dependencies
-        install_ceres_solver
-    fi
+    install_dependencies
+    install_ceres_solver
 }
 
 install_dependencies() {
-    sudo apt-get update -qq
-    sudo apt-get install -qq -y cmake \
+    sudo apt-get update 
+    sudo apt-get install -y cmake \
                            libgoogle-glog-dev \
                            libatlas-base-dev \
                            libeigen3-dev \
@@ -42,7 +40,11 @@ install_ceres_solver() {
 
     # compile and install
     make -j$(nproc) 2>&1 | grep ...
-    sudo make install
+    make install
+    
+    cd $SRC_PATH
+    rm -rf ceres_solver
+    echo "ceres has been installed successfully and there's no error!"
 }
 
 

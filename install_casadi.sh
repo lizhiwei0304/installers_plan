@@ -2,21 +2,20 @@
 set -e  # exit on first error
 UBUNTU_VERSION=`lsb_release --release | cut -f2`
 SRC_PATH="/tmp"
-#CASADI_VERSION
+CASADI_VERSION=3.5.0
 
 main(){
-    if [ $UBUNTU_VERSION == "16.04" ]; then
-        install_cadadi
-    fi
+    install_cadadi
 }
 
 install_cadadi() {
-    cp casadi.tar.gz $SRC_PATH
     cd $SRC_PATH
-    tar -xf casadi.tar.gz
+    wget https://github.com/casadi/casadi/archive/refs/tags/$CASADI_VERSION.tar.gz
+    
+    tar -xf $CASADI_VERSION.tar.gz
     
     # go into benchmark folder and prepare for build
-    cd casadi
+    cd casadi-$CASADI_VERSION/
     
     # compile and install
     mkdir -p build
@@ -27,6 +26,9 @@ install_cadadi() {
     #test if it's successfully
     #cmake -E chdir "build" ctest --build-config Release
 
+    cd $SRC_PATH
+    rm -rf *casadi* *$CASADI_VERSION*
+    
     echo "casadi has been installed successfully if there's no error"
 }
 

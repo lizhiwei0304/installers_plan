@@ -42,6 +42,7 @@ install_fcl() {
     cmake ..
     make -j4
     sudo -E make install
+    cd $DIR && rm -rf fcl
     echo "fcl is installed successfully."
   fi
 }

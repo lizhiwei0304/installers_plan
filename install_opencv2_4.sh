@@ -1,39 +1,38 @@
 #!/bin/bash
-set -e  # exit on first error
-UBUNTU_VERSION=`lsb_release --release | cut -f2`
+set -e 
 SRC_PATH="/tmp"
-OPENCV_BENCHMARK_VERSION=v2.4.13
+OPENCV_BENCHMARK_VERSION="v2.4.13.6"
 
-main(){
-    if [ $UBUNTU_VERSION == "16.04" ]; then
-        install_opencv_2_4
-    fi
+main() {
+    install_opencv_2_4
 }
 
 install_opencv_2_4() {
-    cp opencv-2.4.13.tar.gz $SRC_PATH
-    cd $SRC_PATH
-    if [! -d opencv-2.4.13]; then
-    	tar -xf opencv-2.4.13.tar.gz
+    cd "$SRC_PATH"
+    wget https://github.com/opencv/opencv/archive/refs/tags/2.4.13.6.zip
+    if [ ! -d opencv-2.4.13.6 ]; then
+        unzip 2.4.13.6.zip
     else
-	sudo rm -r opencv-2.4.13
-	tar -xf opencv-2.4.13.tar.gz    
+        sudo rm -r opencv-2.4.13.6
+        unzip 2.4.13.6.zip
+    fi
     
-    # go into opencv-2.4.13 folder and prepare for build
-    cd opencv-2.4.13
+    # 进入 opencv-2.4.13 文件夹并准备编译
+    cd opencv-2.4.13.6
     
-    # compile and install
+    # 编译并安装
     mkdir build
     cd build
-    cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local ..
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local ..
+    
+    make -j$(nproc) 2>&1 | grep ...
     sudo make install
     
-    #test if it's successfully
-    #cmake -E chdir "build" ctest --build-config Release
-
-    echo "opencv-2.4.13 has been installed successfully if there's no error"
+    echo "opencv-2.4.13 has been installed successfully and there's no error"
+    cd "$SRC_PATH"
+    rm -rf *2.4.13*
 }
 
-
-# MAIN
+# 主函数入口
 main
+
