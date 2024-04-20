@@ -13,9 +13,9 @@ install_ipopt()
 
     sudo apt-get install -y gfortran
     echo "decide whether to install"
-    if ( ldconfig -p | grep libipopt ); then
-        echo "Ipopt is already installed......."
-    else
+  #  if ( ldconfig -p | grep libipopt ); then
+  #      echo "Ipopt is already installed......."
+  #  else
         echo "Start installing Ipopt, version: $VERSION .........."
         cd $TEMP_DIR
         wget $IPOPT_URL
@@ -41,9 +41,9 @@ install_ipopt()
         echo "IPOPT installed successfully"
         source $HOME/.bashrc
         
-        cd $TEMP_DIR
-        rm -rf *Ipopt*
-    fi
+        # cd $TEMP_DIR
+        # rm -rf *Ipopt*
+   # fi
 }
 
 install_ipopt

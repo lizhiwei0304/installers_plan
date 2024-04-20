@@ -16,10 +16,15 @@ install_opencv_3_2() {
 
     cd $SRC_PATH
     wget https://github.com/opencv/opencv/archive/3.2.0.tar.gz
+    mv 3.2.0.tar.gz opencv-3.2.0.tar.gz
+    rm 3.2.0.tar.gz
+    
     wget https://github.com/opencv/opencv_contrib/archive/3.2.0.tar.gz
+    mv 3.2.0.tar.gz opencv_contrib-3.2.0.tar.gz
+    rm 3.2.0.tar.gz
    
-    tar -xf 3.2.0.tar.gz
-    tar -xf 3.2.0.tar.gz.1
+    tar -xf opencv-3.2.0.tar.gz
+    tar -xf opencv_contrib-3.2.0.tar.gz
     mv opencv_contrib-3.2.0/ opencv-3.2.0/
 
     cd opencv-3.2.0/
@@ -27,12 +32,17 @@ install_opencv_3_2() {
     mkdir build
     cd build
 
-    cmake -D CMAKE_BUILD_TYPE=Release -D OPENCV_GENERATE_PKGCONFIG=ON -D ENABLE_PRECOMPILED_HEADERS=OFF -D CMAKE_INSTALL_PREFIX=/usr/local/opencv3.2 -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-3.2.0/modules ..
+    cmake -D CMAKE_BUILD_TYPE=Release -D OPENCV_GENERATE_PKGCONFIG=ON -D ENABLE_PRECOMPILED_HEADERS=OFF -D CMAKE_INSTALL_PREFIX=/usr/local/ -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-3.2.0/modules ..
     
     make -j$(nproc) 2>&1 | grep ...
-    sudo make install
+    sudo make install 2>&1 | grep ...
 
-    echo "export SNOPT_HOME=/usr/local/lib/" >> ~/.bashrc
+    # 检查 ~/.bashrc 是否包含指定的行
+    if ! grep -q "export SNOPT_HOME=/usr/local/lib:$LD_LIBRARY_PATH" ~/.bashrc; then
+         # 如果没有包含，则添加到 ~/.bashrc
+         echo "export SNOPT_HOME=/usr/local/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
+    fi
+
     source ~/.bashrc
     sudo ldconfig
     

@@ -12,6 +12,11 @@ apt-get install -y ros-melodic-tf2-sensor-msgs
 apt-get install -y libgeographic-dev
 apt-get install -y libgtest-dev
 apt-get install -y ros-melodic-tf2-geometry-msgs
+apt-get install -y libgfortran3 
+apt-get install -y build-essential cmake libboost-all-dev libeigen3-dev libode-dev python-dev python3-dev
+apt-get install -y ros-melodic-libompl*
+apt-get install -y libompl-dev ompl-demos
+
 
 echo "Installing benchmark"
 ./install_benchmark.sh
@@ -56,4 +61,8 @@ echo "Osqp installation completed"
 echo "Installing Protobuf"
 ./install_Protobuf.sh
 echo "Protobuf installation completed"
+
+echo "Installing Snopt"
+./snopt_binary/install.sh
+echo "Snopt installation completed"
 
