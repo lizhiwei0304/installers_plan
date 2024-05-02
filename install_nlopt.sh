@@ -22,7 +22,7 @@ install_nlopt()
     cd nlopt && mkdir -p build && cd build
     cmake -DWITH_CXX="ON" ..
     make -j$(nproc)
-    make install
+    sudo make install
     
     cd /tmp
     rm -rf nlopt*

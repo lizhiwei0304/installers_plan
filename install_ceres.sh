@@ -40,7 +40,7 @@ install_ceres_solver() {
 
     # compile and install
     make -j$(nproc) 2>&1 | grep ...
-    make install
+    sudo make install
     
     cd $SRC_PATH
     rm -rf ceres_solver

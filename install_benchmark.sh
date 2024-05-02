@@ -21,7 +21,7 @@ install_google_benchmark() {
     mkdir -p build
     cd build
     cmake cmake -DBENCHMARK_ENABLE_GTEST_TESTS=OFF ../
-    make install
+    sudo make install
     
     #test if it's successfully
     #cmake -E chdir "build" ctest --build-config Release

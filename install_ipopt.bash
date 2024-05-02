@@ -30,7 +30,7 @@ install_ipopt()
 
         ./configure --prefix /usr/local 2>&1 | grep ...
         make -j$(nproc) 2>&1 | grep ...  # filter error messages written to stderr 
-        make install > /dev/null
+        sudo make install > /dev/null
         cd "$HOME"
         if (grep 'export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH' $HOME/.bashrc); then
           echo "LD_LIBRARY_PATH has been set."
